@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 
+import 'firebase_options.dart';
+
 Future<void> bootstrap() async {
-  // Initialize Firebase
-  // TODO: Add Firebase configuration
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 }
