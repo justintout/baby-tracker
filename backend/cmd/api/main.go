@@ -15,13 +15,22 @@ import (
 )
 
 func main() {
+	ctx := context.Background()
+
 	cfg, err := config.Load()
 	if err != nil {
 		log.Fatalf("failed to load config: %v", err)
 	}
 
+	// Initialize Firebase
+	firebase, err := config.InitFirebase(ctx, cfg.FirebaseProjectID)
+	if err != nil {
+		log.Fatalf("failed to initialize firebase: %v", err)
+	}
+	log.Println("firebase initialized successfully")
+
 	h := handler.New()
-	r := router.New(h)
+	r := router.New(h, firebase.Auth)
 
 	srv := &http.Server{
 		Addr:         ":" + cfg.Port,
@@ -44,10 +53,10 @@ func main() {
 
 	log.Println("shutting down server...")
 
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	shutdownCtx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
-	if err := srv.Shutdown(ctx); err != nil {
+	if err := srv.Shutdown(shutdownCtx); err != nil {
 		log.Fatalf("server forced to shutdown: %v", err)
 	}
 
