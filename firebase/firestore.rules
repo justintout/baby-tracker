@@ -1,0 +1,87 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    function getFamilyData(familyId) {
+      return get(/databases/$(database)/documents/families/$(familyId)).data;
+    }
+
+    function isFamilyMember(familyId) {
+      return isSignedIn() &&
+             request.auth.uid in getFamilyData(familyId).memberIds;
+    }
+
+    function isFamilyOwner(familyId) {
+      let family = getFamilyData(familyId);
+      return family.members[request.auth.uid].role == "owner";
+    }
+
+    // Users collection
+    match /users/{userId} {
+      // Any signed-in user can read user profiles (for sharing UI)
+      allow read: if isSignedIn();
+      // Users can only write their own document
+      allow create, update: if isOwner(userId);
+      allow delete: if false; // Prevent accidental deletion
+    }
+
+    // Families collection
+    match /families/{familyId} {
+      // Only family members can read
+      allow read: if isFamilyMember(familyId);
+      // Any signed-in user can create a new family
+      allow create: if isSignedIn() &&
+                      request.resource.data.createdBy == request.auth.uid &&
+                      request.auth.uid in request.resource.data.memberIds;
+      // Family members can update
+      allow update: if isFamilyMember(familyId);
+      // Only owner can delete
+      allow delete: if isFamilyOwner(familyId);
+
+      // Children subcollection
+      match /children/{childId} {
+        allow read, write: if isFamilyMember(familyId);
+
+        // Entries subcollection
+        match /entries/{entryId} {
+          allow read: if isFamilyMember(familyId);
+          allow create: if isFamilyMember(familyId) &&
+                          request.resource.data.createdBy == request.auth.uid;
+          allow update: if isFamilyMember(familyId);
+          // Only the creator can delete their own entries
+          allow delete: if isFamilyMember(familyId) &&
+                          resource.data.createdBy == request.auth.uid;
+        }
+
+        // Media subcollection
+        match /media/{mediaId} {
+          allow read: if isFamilyMember(familyId);
+          allow create: if isFamilyMember(familyId) &&
+                          request.resource.data.createdBy == request.auth.uid;
+          // Only the creator can update/delete their media
+          allow update, delete: if isFamilyMember(familyId) &&
+                                  resource.data.createdBy == request.auth.uid;
+        }
+      }
+    }
+
+    // Invitations - read-only from client, backend writes via Admin SDK
+    match /invitations/{invitationId} {
+      // Users can read invitations sent to them or by them
+      allow read: if isSignedIn() &&
+                    (resource.data.email == request.auth.token.email ||
+                     resource.data.invitedBy == request.auth.uid);
+      // Only backend can write (via Admin SDK)
+      allow write: if false;
+    }
+  }
+}

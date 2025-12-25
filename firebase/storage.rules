@@ -1,0 +1,42 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Helper function to check family membership
+    function isFamilyMember(familyId) {
+      return request.auth != null &&
+             request.auth.uid in firestore.get(
+               /databases/(default)/documents/families/$(familyId)
+             ).data.memberIds;
+    }
+
+    // Media files for children
+    match /families/{familyId}/children/{childId}/media/{allPaths=**} {
+      // Family members can read
+      allow read: if isFamilyMember(familyId);
+
+      // Family members can write with constraints
+      allow write: if isFamilyMember(familyId) &&
+                     request.resource.size < 50 * 1024 * 1024 && // 50MB max
+                     (request.resource.contentType.matches('image/.*') ||
+                      request.resource.contentType.matches('video/.*'));
+    }
+
+    // User profile photos
+    match /users/{userId}/profile/{fileName} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null &&
+                     request.auth.uid == userId &&
+                     request.resource.size < 5 * 1024 * 1024 && // 5MB max
+                     request.resource.contentType.matches('image/.*');
+    }
+
+    // Child profile photos
+    match /families/{familyId}/children/{childId}/profile/{fileName} {
+      allow read: if isFamilyMember(familyId);
+      allow write: if isFamilyMember(familyId) &&
+                     request.resource.size < 5 * 1024 * 1024 &&
+                     request.resource.contentType.matches('image/.*');
+    }
+  }
+}
