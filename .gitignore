@@ -44,7 +44,7 @@ Thumbs.db
 .env.*.local
 *.pem
 serviceAccountKey.json
-firebase-service-account.json
+*service-account*.json
 
 # Build outputs
 /backend/bin/
