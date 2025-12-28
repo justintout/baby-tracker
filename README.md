@@ -166,6 +166,60 @@ firebase deploy --only firestore:rules
 firebase deploy --only storage
 ```
 
+### App Distribution (Android Beta Testing)
+
+Automated via GitHub Actions on push to `main` (when `app/**` changes):
+
+```
+Push to main (app/**) → Build APK → Upload to Firebase App Distribution → Testers notified
+```
+
+#### One-time Setup
+
+1. **Enable App Distribution** in [Firebase Console](https://console.firebase.google.com/project/baby-tracker-88ca3/appdistribution)
+
+2. **Create tester group** called `testers` and add tester emails
+
+3. **Create Firebase service account:**
+   ```bash
+   # In Google Cloud Console, create a service account with these roles:
+   # - Firebase App Distribution Admin
+   # - Service Account User
+
+   # Download the JSON key file
+   ```
+
+4. **Add GitHub secret:**
+   - Go to repo Settings → Secrets → Actions
+   - Add `FIREBASE_SERVICE_ACCOUNT` with the JSON key file contents
+
+#### Manual Distribution
+
+```bash
+cd app
+
+# Build release APK
+flutter build apk --release
+
+# Install Firebase CLI tools
+npm install -g firebase-tools
+firebase login
+
+# Distribute to testers
+firebase appdistribution:distribute \
+  build/app/outputs/flutter-apk/app-release.apk \
+  --app 1:865964287500:android:957d61901427ccd8d9f029 \
+  --groups "testers" \
+  --release-notes "Testing build"
+```
+
+#### How Testers Install
+
+1. Tester receives email invite from Firebase
+2. Downloads **Firebase App Tester** app from Play Store
+3. Signs in with invited email
+4. Installs the app directly from App Tester
+
 ## Environment Variables
 
 ### Backend (Cloud Run)
