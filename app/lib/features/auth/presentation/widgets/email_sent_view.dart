@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/auth_provider.dart';
@@ -81,6 +82,25 @@ class EmailSentView extends ConsumerWidget {
             ref.read(authControllerProvider.notifier).sendSignInLink(email);
           },
           child: const Text('Resend email'),
+        ),
+        const SizedBox(height: 24),
+        // Debug: Paste link for simulator testing
+        TextButton.icon(
+          onPressed: () async {
+            final data = await Clipboard.getData(Clipboard.kTextPlain);
+            final link = data?.text;
+            if (link != null && link.isNotEmpty) {
+              ref.read(authControllerProvider.notifier).signInWithEmailLink(link);
+            } else {
+              if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('No link in clipboard')),
+                );
+              }
+            }
+          },
+          icon: const Icon(Icons.content_paste),
+          label: const Text('Paste link from clipboard'),
         ),
         const Spacer(flex: 1),
       ],
