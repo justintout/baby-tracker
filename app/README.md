@@ -6,7 +6,9 @@ Flutter mobile application for tracking newborn activities with real-time multi-
 
 - **Magic Link Authentication** - Passwordless email sign-in via Firebase Auth
 - **Multiple Baby Profiles** - Create families, add multiple babies, switch between them
-- **Activity Tracking** - Log feedings, diaper changes, and sleep (in progress)
+- **Activity Tracking** - Log feedings, diaper changes, sleep sessions
+- **Growth Measurements** - Track weight (lbs/oz), height, head circumference
+- **Insights & Charts** - Daily summaries, growth charts, feeding trends (fl_chart)
 - **Real-time Sync** - Firestore-powered sync across devices
 
 ## Tech Stack
@@ -117,6 +119,8 @@ families/{familyId}
   - name, createdBy, memberIds[], members{}
   └── children/{childId}
         - name, birthDate, photoURL
-        └── entries/{entryId}
-              - type, timestamp, feedingType, amount, etc.
+        ├── entries/{entryId}
+        │     - type (feeding/diaper/sleep), timestamp, feedingType, amount, etc.
+        └── measurements/{measurementId}
+              - date, weightOz, heightInches, headCircumferenceInches
 ```

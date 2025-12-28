@@ -4,11 +4,12 @@ A mobile app for tracking newborn information with real-time sync between caregi
 
 ## Features
 
-- **Tracking**: Feedings (breast/bottle/formula), diaper changes, sleep/naps
+- **Tracking**: Feedings (breast/bottle/formula), diaper changes, sleep/naps, growth measurements
+- **Growth charts**: Track weight, height, and head circumference over time
+- **Insights**: Daily summaries and 7-day feeding trends with fl_chart visualizations
+- **Multi-baby profiles**: Manage multiple children, switch between them easily
 - **Multi-user sync**: Parents and caregivers share access in real-time
-- **Photos & videos**: Capture and share moments
 - **Quick entry**: One-tap buttons for fast logging
-- **Offline support**: Works without connectivity, syncs when online
 - **Passwordless auth**: Magic link email sign-in
 
 ## Tech Stack
