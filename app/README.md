@@ -1,13 +1,28 @@
 # Baby Tracker App
 
-Flutter mobile application for tracking newborn information.
+Flutter mobile application for tracking newborn activities with real-time multi-caregiver sync.
+
+## Features
+
+- **Magic Link Authentication** - Passwordless email sign-in via Firebase Auth
+- **Multiple Baby Profiles** - Create families, add multiple babies, switch between them
+- **Activity Tracking** - Log feedings, diaper changes, and sleep (in progress)
+- **Real-time Sync** - Firestore-powered sync across devices
+
+## Tech Stack
+
+- **Frontend**: Flutter 3.x with Riverpod state management
+- **Backend**: Go 1.24 on Google Cloud Run
+- **Database**: Firebase Firestore (real-time sync)
+- **Auth**: Firebase Auth (magic link)
+- **CI/CD**: GitHub Actions
 
 ## Prerequisites
 
 - Flutter SDK 3.x
 - Xcode (for iOS)
 - Android Studio (for Android)
-- Firebase project configured
+- Firebase CLI (`npm install -g firebase-tools`)
 
 ## Setup
 
@@ -24,16 +39,22 @@ flutter pub get
 dart pub global activate flutterfire_cli
 
 # Configure Firebase
-flutterfire configure --project=YOUR_PROJECT_ID
+flutterfire configure --project=baby-tracker-88ca3
 ```
 
-### 3. Generate code
+### 3. Deploy Firestore Rules
+
+```bash
+firebase deploy --only firestore:rules
+```
+
+### 4. Generate code
 
 ```bash
 flutter pub run build_runner build --delete-conflicting-outputs
 ```
 
-### 4. Run the app
+### 5. Run the app
 
 ```bash
 # iOS Simulator
@@ -49,8 +70,8 @@ flutter run -d android
 lib/
   core/              # Core utilities, theme, constants
   features/          # Feature modules (clean architecture)
-    auth/            # Authentication
-    family/          # Family & child management
+    auth/            # Magic link authentication
+    family/          # Family & baby profile management
     tracking/        # Entry tracking (feeding, diaper, sleep)
     media/           # Photo/video handling
     settings/        # App settings
@@ -58,16 +79,44 @@ lib/
   routing/           # Navigation (go_router)
   main.dart          # Entry point
   app.dart           # MaterialApp configuration
-  bootstrap.dart     # Initialization
+  bootstrap.dart     # Firebase initialization
 ```
-
-## State Management
-
-Using **Riverpod** with code generation for type-safe, testable state management.
 
 ## Architecture
 
 Clean Architecture with feature-based organization:
-- **domain/**: Entities, repositories (interfaces), use cases
-- **data/**: Repository implementations, data sources, models
-- **presentation/**: Screens, widgets, providers
+
+```
+feature/
+  domain/           # Business logic (no Flutter dependencies)
+    entities/       # Immutable data classes (freezed)
+    repositories/   # Abstract interfaces
+  data/             # Implementation details
+    datasources/    # Firebase/API data sources
+    repositories/   # Repository implementations
+  presentation/     # UI layer
+    providers/      # Riverpod state management
+    screens/        # Full-page widgets
+    widgets/        # Reusable components
+```
+
+## State Management
+
+Using **Riverpod** for reactive state management:
+- `StreamProvider` for Firestore real-time listeners
+- `StateNotifierProvider` for mutation controllers
+- `Provider` for dependency injection
+
+## Firestore Structure
+
+```
+users/{userId}
+  - email, displayName, familyIds[], settings{}
+
+families/{familyId}
+  - name, createdBy, memberIds[], members{}
+  └── children/{childId}
+        - name, birthDate, photoURL
+        └── entries/{entryId}
+              - type, timestamp, feedingType, amount, etc.
+```

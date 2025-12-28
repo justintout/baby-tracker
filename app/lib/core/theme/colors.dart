@@ -8,6 +8,7 @@ class AppColors {
   static const Color feeding = Color(0xFFFFB74D);  // Warm orange
   static const Color diaper = Color(0xFF81C784);   // Soft green
   static const Color sleep = Color(0xFF9575CD);    // Gentle purple
+  static const Color growth = Color(0xFF4FC3F7);   // Light blue
 
   // Semantic colors
   static const Color success = Color(0xFF4CAF50);

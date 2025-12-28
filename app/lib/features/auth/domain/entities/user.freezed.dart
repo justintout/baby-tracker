@@ -15,6 +15,206 @@ final _privateConstructorUsedError = UnsupportedError(
   'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
 );
 
+UserSettings _$UserSettingsFromJson(Map<String, dynamic> json) {
+  return _UserSettings.fromJson(json);
+}
+
+/// @nodoc
+mixin _$UserSettings {
+  String? get defaultChildId => throw _privateConstructorUsedError;
+  bool get notifications => throw _privateConstructorUsedError;
+  String get theme => throw _privateConstructorUsedError;
+
+  /// Serializes this UserSettings to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of UserSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $UserSettingsCopyWith<UserSettings> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UserSettingsCopyWith<$Res> {
+  factory $UserSettingsCopyWith(
+    UserSettings value,
+    $Res Function(UserSettings) then,
+  ) = _$UserSettingsCopyWithImpl<$Res, UserSettings>;
+  @useResult
+  $Res call({String? defaultChildId, bool notifications, String theme});
+}
+
+/// @nodoc
+class _$UserSettingsCopyWithImpl<$Res, $Val extends UserSettings>
+    implements $UserSettingsCopyWith<$Res> {
+  _$UserSettingsCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of UserSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? defaultChildId = freezed,
+    Object? notifications = null,
+    Object? theme = null,
+  }) {
+    return _then(
+      _value.copyWith(
+            defaultChildId: freezed == defaultChildId
+                ? _value.defaultChildId
+                : defaultChildId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            notifications: null == notifications
+                ? _value.notifications
+                : notifications // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            theme: null == theme
+                ? _value.theme
+                : theme // ignore: cast_nullable_to_non_nullable
+                      as String,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$UserSettingsImplCopyWith<$Res>
+    implements $UserSettingsCopyWith<$Res> {
+  factory _$$UserSettingsImplCopyWith(
+    _$UserSettingsImpl value,
+    $Res Function(_$UserSettingsImpl) then,
+  ) = __$$UserSettingsImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? defaultChildId, bool notifications, String theme});
+}
+
+/// @nodoc
+class __$$UserSettingsImplCopyWithImpl<$Res>
+    extends _$UserSettingsCopyWithImpl<$Res, _$UserSettingsImpl>
+    implements _$$UserSettingsImplCopyWith<$Res> {
+  __$$UserSettingsImplCopyWithImpl(
+    _$UserSettingsImpl _value,
+    $Res Function(_$UserSettingsImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of UserSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? defaultChildId = freezed,
+    Object? notifications = null,
+    Object? theme = null,
+  }) {
+    return _then(
+      _$UserSettingsImpl(
+        defaultChildId: freezed == defaultChildId
+            ? _value.defaultChildId
+            : defaultChildId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        notifications: null == notifications
+            ? _value.notifications
+            : notifications // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        theme: null == theme
+            ? _value.theme
+            : theme // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UserSettingsImpl implements _UserSettings {
+  const _$UserSettingsImpl({
+    this.defaultChildId,
+    this.notifications = true,
+    this.theme = 'system',
+  });
+
+  factory _$UserSettingsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserSettingsImplFromJson(json);
+
+  @override
+  final String? defaultChildId;
+  @override
+  @JsonKey()
+  final bool notifications;
+  @override
+  @JsonKey()
+  final String theme;
+
+  @override
+  String toString() {
+    return 'UserSettings(defaultChildId: $defaultChildId, notifications: $notifications, theme: $theme)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserSettingsImpl &&
+            (identical(other.defaultChildId, defaultChildId) ||
+                other.defaultChildId == defaultChildId) &&
+            (identical(other.notifications, notifications) ||
+                other.notifications == notifications) &&
+            (identical(other.theme, theme) || other.theme == theme));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, defaultChildId, notifications, theme);
+
+  /// Create a copy of UserSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UserSettingsImplCopyWith<_$UserSettingsImpl> get copyWith =>
+      __$$UserSettingsImplCopyWithImpl<_$UserSettingsImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UserSettingsImplToJson(this);
+  }
+}
+
+abstract class _UserSettings implements UserSettings {
+  const factory _UserSettings({
+    final String? defaultChildId,
+    final bool notifications,
+    final String theme,
+  }) = _$UserSettingsImpl;
+
+  factory _UserSettings.fromJson(Map<String, dynamic> json) =
+      _$UserSettingsImpl.fromJson;
+
+  @override
+  String? get defaultChildId;
+  @override
+  bool get notifications;
+  @override
+  String get theme;
+
+  /// Create a copy of UserSettings
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$UserSettingsImplCopyWith<_$UserSettingsImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 AppUser _$AppUserFromJson(Map<String, dynamic> json) {
   return _AppUser.fromJson(json);
 }
@@ -26,6 +226,7 @@ mixin _$AppUser {
   String? get displayName => throw _privateConstructorUsedError;
   String? get photoURL => throw _privateConstructorUsedError;
   List<String> get familyIds => throw _privateConstructorUsedError;
+  UserSettings get settings => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
@@ -49,9 +250,12 @@ abstract class $AppUserCopyWith<$Res> {
     String? displayName,
     String? photoURL,
     List<String> familyIds,
+    UserSettings settings,
     DateTime? createdAt,
     DateTime? updatedAt,
   });
+
+  $UserSettingsCopyWith<$Res> get settings;
 }
 
 /// @nodoc
@@ -74,6 +278,7 @@ class _$AppUserCopyWithImpl<$Res, $Val extends AppUser>
     Object? displayName = freezed,
     Object? photoURL = freezed,
     Object? familyIds = null,
+    Object? settings = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -99,6 +304,10 @@ class _$AppUserCopyWithImpl<$Res, $Val extends AppUser>
                 ? _value.familyIds
                 : familyIds // ignore: cast_nullable_to_non_nullable
                       as List<String>,
+            settings: null == settings
+                ? _value.settings
+                : settings // ignore: cast_nullable_to_non_nullable
+                      as UserSettings,
             createdAt: freezed == createdAt
                 ? _value.createdAt
                 : createdAt // ignore: cast_nullable_to_non_nullable
@@ -110,6 +319,16 @@ class _$AppUserCopyWithImpl<$Res, $Val extends AppUser>
           )
           as $Val,
     );
+  }
+
+  /// Create a copy of AppUser
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserSettingsCopyWith<$Res> get settings {
+    return $UserSettingsCopyWith<$Res>(_value.settings, (value) {
+      return _then(_value.copyWith(settings: value) as $Val);
+    });
   }
 }
 
@@ -127,9 +346,13 @@ abstract class _$$AppUserImplCopyWith<$Res> implements $AppUserCopyWith<$Res> {
     String? displayName,
     String? photoURL,
     List<String> familyIds,
+    UserSettings settings,
     DateTime? createdAt,
     DateTime? updatedAt,
   });
+
+  @override
+  $UserSettingsCopyWith<$Res> get settings;
 }
 
 /// @nodoc
@@ -151,6 +374,7 @@ class __$$AppUserImplCopyWithImpl<$Res>
     Object? displayName = freezed,
     Object? photoURL = freezed,
     Object? familyIds = null,
+    Object? settings = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -176,6 +400,10 @@ class __$$AppUserImplCopyWithImpl<$Res>
             ? _value._familyIds
             : familyIds // ignore: cast_nullable_to_non_nullable
                   as List<String>,
+        settings: null == settings
+            ? _value.settings
+            : settings // ignore: cast_nullable_to_non_nullable
+                  as UserSettings,
         createdAt: freezed == createdAt
             ? _value.createdAt
             : createdAt // ignore: cast_nullable_to_non_nullable
@@ -198,6 +426,7 @@ class _$AppUserImpl implements _AppUser {
     this.displayName,
     this.photoURL,
     final List<String> familyIds = const [],
+    this.settings = const UserSettings(),
     this.createdAt,
     this.updatedAt,
   }) : _familyIds = familyIds;
@@ -223,13 +452,16 @@ class _$AppUserImpl implements _AppUser {
   }
 
   @override
+  @JsonKey()
+  final UserSettings settings;
+  @override
   final DateTime? createdAt;
   @override
   final DateTime? updatedAt;
 
   @override
   String toString() {
-    return 'AppUser(id: $id, email: $email, displayName: $displayName, photoURL: $photoURL, familyIds: $familyIds, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'AppUser(id: $id, email: $email, displayName: $displayName, photoURL: $photoURL, familyIds: $familyIds, settings: $settings, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -247,6 +479,8 @@ class _$AppUserImpl implements _AppUser {
               other._familyIds,
               _familyIds,
             ) &&
+            (identical(other.settings, settings) ||
+                other.settings == settings) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -262,6 +496,7 @@ class _$AppUserImpl implements _AppUser {
     displayName,
     photoURL,
     const DeepCollectionEquality().hash(_familyIds),
+    settings,
     createdAt,
     updatedAt,
   );
@@ -287,6 +522,7 @@ abstract class _AppUser implements AppUser {
     final String? displayName,
     final String? photoURL,
     final List<String> familyIds,
+    final UserSettings settings,
     final DateTime? createdAt,
     final DateTime? updatedAt,
   }) = _$AppUserImpl;
@@ -303,6 +539,8 @@ abstract class _AppUser implements AppUser {
   String? get photoURL;
   @override
   List<String> get familyIds;
+  @override
+  UserSettings get settings;
   @override
   DateTime? get createdAt;
   @override

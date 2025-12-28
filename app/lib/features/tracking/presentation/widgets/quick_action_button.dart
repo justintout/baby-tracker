@@ -20,8 +20,8 @@ class QuickActionButton extends StatelessWidget {
       onTap: onPressed,
       borderRadius: BorderRadius.circular(16),
       child: Container(
-        width: 100,
-        padding: const EdgeInsets.symmetric(vertical: 16),
+        width: 80,
+        padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
           color: color.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(16),
@@ -34,7 +34,7 @@ class QuickActionButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: color.withValues(alpha: 0.2),
                 shape: BoxShape.circle,
@@ -42,7 +42,7 @@ class QuickActionButton extends StatelessWidget {
               child: Icon(
                 icon,
                 color: color,
-                size: 28,
+                size: 24,
               ),
             ),
             const SizedBox(height: 8),
